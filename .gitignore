@@ -1,0 +1,9 @@
+.venv/*
+Data
+laco.ai
+
+Model
+
+Notebook/notebook_stuff.ipynb
+
+Utils/__pycache__
