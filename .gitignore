@@ -1,8 +1,6 @@
 .venv/*
-Data
+Data*
 laco.ai
-
-Model
 
 Notebook/notebook_stuff.ipynb
 

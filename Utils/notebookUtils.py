@@ -143,3 +143,45 @@ def visualize_image_pairs(sat_folder, gt_folder, num_samples=5):
         axes[1].axis('off')
 
         plt.show()
+       
+def resample_images(input_folder, output_folder, target_size=(256, 256)):
+    """
+    Resample images in the input folder and save them to the output folder.
+
+    Parameters:
+    - input_folder (str): Path to the input folder containing images.
+    - output_folder (str): Path to the output folder to save resampled images.
+    - target_size (tuple): Target size for resampling, e.g., (width, height).
+    """
+    # Create output folder if it doesn't exist
+    os.makedirs(output_folder, exist_ok=True)
+
+    # Get the list of files in the input folder
+    file_list = os.listdir(input_folder)
+
+    # Process each file and save the resampled version
+    for file_name in tqdm(file_list, desc="Resampling", unit="file"):
+        input_path = os.path.join(input_folder, file_name)
+        output_path = os.path.join(output_folder, file_name)
+
+        # Open the image
+        img = Image.open(input_path)
+
+        # Resize the image to the desired dimensions
+        #Image.ANTIALIAS: Anti-aliasing to reduce artifacts
+        #Image.NEAREST: Nearest-neighbor sampling
+        #Image.BOX: Box sampling
+        #Image.BILINEAR: Bilinear interpolation
+        #Image.HAMMING: Hamming-windowed sinc interpolation
+        #Image.BICUBIC: Bicubic interpolation
+        #Image.LANCZOS: Lanczos-windowed sinc interpolation
+        resampled_img = img.resize(target_size, Image.ANTIALIAS)
+
+        # Save the resampled image
+        resampled_img.save(output_path)
+
+    print("Resampling completed.")        
+        
+        
+        
+        
