@@ -1,4 +1,5 @@
-.venv/*
+.venv*
+.vscode*
 Data*
 laco.ai
 Model*
