@@ -1,7 +1,7 @@
 .venv*
 .vscode*
 Data*
-laco.ai
+laco.ai*
 Model*
 Notebook/notebook_stuff.ipynb
 
