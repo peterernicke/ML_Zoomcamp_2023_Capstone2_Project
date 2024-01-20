@@ -178,14 +178,13 @@ def resample_images(input_folder, output_folder, target_size=(256, 256)):
         img = Image.open(input_path)
 
         # Resize the image to the desired dimensions
-        #Image.ANTIALIAS: Anti-aliasing to reduce artifacts
         #Image.NEAREST: Nearest-neighbor sampling
         #Image.BOX: Box sampling
         #Image.BILINEAR: Bilinear interpolation
         #Image.HAMMING: Hamming-windowed sinc interpolation
         #Image.BICUBIC: Bicubic interpolation
         #Image.LANCZOS: Lanczos-windowed sinc interpolation
-        resampled_img = img.resize(target_size, Image.ANTIALIAS)
+        resampled_img = img.resize(target_size, Image.LANCZOS)
 
         # Save the resampled image
         resampled_img.save(output_path)
@@ -470,7 +469,7 @@ def resample_folder(input_folder, output_folder, target_size=(128, 128)):
         img = Image.open(input_path)
 
         # Resize the image to the desired dimensions
-        resampled_img = img.resize(target_size, Image.ANTIALIAS)
+        resampled_img = img.resize(target_size, Image.LANCZOS)
 
         # Save the resampled image
         resampled_img.save(output_path)

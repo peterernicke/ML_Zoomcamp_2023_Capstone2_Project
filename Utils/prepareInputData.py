@@ -16,7 +16,7 @@ SOURCE_MASKS_FOLDER = os.path.join(main_folder, 'masks')
 PREFIX_SAT = 'sat_'
 PREFIX_GT = 'gt_'
 
-# Tile size for resizing
+# Tile size for cropping
 TILE_SIZE = 512
 
 # Ratios for dataset splitting
@@ -67,7 +67,7 @@ def split_dataset(image_files, mask_files, train_ratio=0.8, validate_ratio=0.1):
         Split the dataset into train, validate, and test sets.
 
         Parameters:
-        - image_files (list): List of satellite image file names.
+        - image_files (list): List of aerial image file names.
         - mask_files (list): List of mask image file names.
         - train_ratio (float): Ratio of files for training (default: 0.8).
         - validate_ratio (float): Ratio of files for validation (default: 0.1).
@@ -94,9 +94,9 @@ def split_dataset(image_files, mask_files, train_ratio=0.8, validate_ratio=0.1):
 
     return train_files, validate_files, test_files
 
-def resize_image(image_path, output_folder, tile_size, prefix):
+def crop_image(image_path, output_folder, tile_size, prefix):
     """
-        Resize an image and save it as subtiles of shape (tile_size, tile_size).
+        Crop an image and save it as subtiles of shape (tile_size, tile_size).
 
         Parameters:
         - image_path (str): Path to the input image.
@@ -135,9 +135,9 @@ def resize_image(image_path, output_folder, tile_size, prefix):
 
             tile.save(tile_path)
 
-def copy_and_resize_files(file_list, destination_sat_folder, destination_gt_folder, progress_desc):
+def copy_and_crop_files(file_list, destination_sat_folder, destination_gt_folder, progress_desc):
     """
-        Resize image and mask files and copy them to the destination folders.
+        Crop image and mask files and copy them to the destination folders.
 
         Parameters:
         - file_list (list): List of file pairs.
@@ -146,11 +146,11 @@ def copy_and_resize_files(file_list, destination_sat_folder, destination_gt_fold
         - progress_desc (str): Description for the tqdm progress bar.
     """
     for image_file, mask_file in tqdm(file_list, desc=progress_desc, unit="file"):
-        # Resize image and copy to sat folder
-        resize_image(os.path.join(SOURCE_IMAGES_FOLDER, image_file), destination_sat_folder, TILE_SIZE, PREFIX_SAT)
+        # Crop image and copy to sat folder
+        crop_image(os.path.join(SOURCE_IMAGES_FOLDER, image_file), destination_sat_folder, TILE_SIZE, PREFIX_SAT)
 
-        # Resize mask and copy to gt folder
-        resize_image(os.path.join(SOURCE_MASKS_FOLDER, mask_file), destination_gt_folder, TILE_SIZE, PREFIX_GT)
+        # Crop mask and copy to gt folder
+        crop_image(os.path.join(SOURCE_MASKS_FOLDER, mask_file), destination_gt_folder, TILE_SIZE, PREFIX_GT)
 
 
 ################################################
@@ -174,21 +174,21 @@ if __name__ == "__main__":
                                                             validate_ratio=VALIDATE_RATIO)
 
     # Copy and resize (image, mask) pairs to the train folders
-    copy_and_resize_files(train_files, 
+    copy_and_crop_files(train_files, 
                           TRAIN_SAT_FOLDER, 
                           TRAIN_GT_FOLDER, 
-                          progress_desc="Copying and resizing training files")
+                          progress_desc="Copying and cropping training files")
 
     # Copy and resize (image, mask) pairs to the validate folders
-    copy_and_resize_files(validate_files, 
+    copy_and_crop_files(validate_files, 
                           VALIDATE_SAT_FOLDER, 
                           VALIDATE_GT_FOLDER, 
-                          progress_desc="Copying and resizing validation files")
+                          progress_desc="Copying and cropping validation files")
 
     # Copy and resize (image, mask) pairs to the test folders
-    copy_and_resize_files(test_files, 
+    copy_and_crop_files(test_files, 
                           TEST_SAT_FOLDER, 
                           TEST_GT_FOLDER, 
-                          progress_desc="Copying and resizing test files")
+                          progress_desc="Copying and cropping test files")
 
     print("Data copying and splitting completed.")
