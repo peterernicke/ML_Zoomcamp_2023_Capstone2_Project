@@ -1,5 +1,9 @@
 # ML Zoomcamp 2023 Capstone2 Project
-
+<p align="center">
+<img src="Images/cover-bingImageCreator.jpg" width="850" align="center">
+</br>
+Image created Microsoft Bing Image Creator (https://www.bing.com/images/create)
+</p>
 
 ## Problem Description
 The dataset for this project is from [LandCover.ai](https://landcover.ai.linuxpolska.com/download/landcover.ai.v1.zip). LandCover.ai provides aerial images of Poland (total area of 216.27 km²) and a corresponding mask for each image. That mask labels every pixel of the aerial image with it's own class. The resulting segmentation has 4 landcover classes buildings, woodlands, water and roads. Any pixel that doesn't belong to this classes belong to the fifth class "unlabeled".
