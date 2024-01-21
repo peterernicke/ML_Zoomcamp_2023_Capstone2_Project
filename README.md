@@ -179,17 +179,17 @@ Choose an aerial image and upload it. Wait a moment and you'll see both files yo
     <img src="Images/flaskWebsiteResult.png" alt="predicted_image" style="width: 50%;">
 </p>
 
-## Model serving with TensorFlow Serving
-
-### Step 1: Converting model to saved_model format
-
-### Step 2: Starting model serving component
-
-### Step 3: Starting gateway
-
-### Step 4: Testing
-
 ## Serverless Deployment with AWS Lambda
+In this section I describe how I use AWS Lambda for the serverless deployment of my model. You can find all the preparation in the Jupyter notebook called "notebook_serverless.ipynb" in the Notebook folder. Ensure that you have a converted model file "final-model.tflite" in your Deployment folder. Here ("notebook_serverless.ipynb") you can find the steps to convert a model. If you want to see this in action you just need the following commands:
+
+- **cd Deployment**
+- **docker build -t segmentation-model .**
+- **docker run -it --rm -p 8080:8080 segmentation-model:latest**
+
+Now you have a docker container running with the image public.ecr.aws/lambda/python:3.10. That container is waiting to answer requests for given aerial images. To send a request you can run the "test.py" script. Ensure that the "image_path" is correctly set.
+
+- **cd Deployment**
+- **python test.py**
 
 ## Troubleshooting
 In case there are any problems to create the virtual environment try the following steps:
