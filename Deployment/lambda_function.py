@@ -1,15 +1,13 @@
+import os
 import numpy as np
-import requests
-
 from PIL import Image
 from io import BytesIO
 from tensorflow import keras
-from flask import jsonify, send_file
+from tempfile import NamedTemporaryFile
 
 # Function to load and preprocess a single example
 def preprocess_example(img):
     input_image = np.array(Image.open(img)) / 255.0
-    #input_image = np.array(img) / 255.0
     return np.expand_dims(input_image, axis=0)
 
 def recolor_prediction(predicted_mask):
@@ -32,42 +30,42 @@ def recolor_prediction(predicted_mask):
     
     return pred_colored
 
-model_path = "final-model.keras"
-
 def lambda_handler(event, context):
-    # Check if the request contains a file
-    if 'image'not in requests.files:
-        return jsonify({"error": "No image provided"}), 400
-    
-    imagefile = requests.files['image']
-    
-    # Check if the file has an allowed extension
-    allowed_extensions = {'tif', 'tiff'}
-    if '.' in imagefile.filename and imagefile.filename.rsplit('.', 1)[1].lower() not in allowed_extensions:
-        return jsonify({"error": "Invalid file extension"}), 400
-    
+    image_data = event['body'].encode('latin-1')
     try:
         # Load the model
+        model_path = "final-model.keras"  # Update with your model path
         model = keras.models.load_model(model_path)
-    
+
         # Load and preprocess input image
-        input_image = preprocess_example(imagefile)
-    
+        input_image = preprocess_example(BytesIO(image_data))
+
         # Predict with the model
         predictions = model.predict(input_image)
         predicted_mask = np.argmax(predictions[0], axis=-1)
 
         colored_predicted_mask = recolor_prediction(predicted_mask)
-        
+
         PIL_image = Image.fromarray(colored_predicted_mask.astype('uint8'), 'RGB')
-        
+
         # Save the image to a BytesIO object
         image_bytes = BytesIO()
         PIL_image.save(image_bytes, format='PNG')
-        
-        # Send the image back to the client
         image_bytes.seek(0)
-        return send_file(image_bytes, mimetype='image/png', as_attachment=True, download_name='predicted_image.png')
-         
+
+        # Read the BytesIO object content and convert to bytes
+        image_content_bytes = image_bytes.read()
+
+        return {
+            'statusCode': 200,
+            'body': image_content_bytes.decode('latin-1'),
+            'headers': {
+                'Content-Type': 'image/png',
+                'Content-Disposition': 'attachment; filename=predicted_image.png'
+            }
+        }
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return {
+            'statusCode': 500,
+            'body': str(e)
+        }
