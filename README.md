@@ -12,6 +12,8 @@ The task for this project is to provide an automatic mapping of buildings, woodl
 ## Data
 The raster images are RGB-GeoTiffs with EPSG:2180 spatial reference system and the masks are single-channel GeoTiffs with EPSG:2180 spatial reference system. The dataset contains 33 orthophotos with 25 cm per pixel resolution (~9000x9500 px) and 8 orthophotos with 50 cm per pixel resolution (~4200x4700 px).
 
+**Important note**: If you're using this data, please note the license information on their [web site](https://landcover.ai.linuxpolska.com/). "This dataset is licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/)."
+
 To get a better understanding about how the dataset looks like, you find three examples below.
 
 <p align="center">
@@ -105,6 +107,10 @@ Adapt two variables in "prepareInputData.py"...
 - **python prepareInputData.py**
 
 #### Recommendation: Step 3 - Resample images to 256x256 patches
+**Important note**
+On my Ubuntu 22.04 pc this setting let my machine rebooting, on Windows this works fine.
+To avoid overloading the machine, you can also choose the safer option and choose a **RESAMPLING_IMAGE_SIZE = 128**. In that case you need to adapt the folder paths (256->128).
+
 Ensure that the following default values are set in "prepareTraining.py"
 - RESAMPLING = True
 - RESAMPLING_IMAGE_SIZE = 256                     # 512, 256, 128
@@ -194,8 +200,10 @@ Now you have a docker container running with the image public.ecr.aws/lambda/pyt
 ## Troubleshooting
 In case there are any problems to create the virtual environment try the following steps:
 
-1. Delete "Pipfile", "Pipfile.lock", and "requirements.txt"
+1. Delete "Pipfile", "Pipfile.lock"
 2. Use these commands to build the environment
 
 - **make environment**
-- **pipenv install ...**
+- **pipenv shell**
+- **pip install -r requirements.txt**          # for Ubuntu
+- **pip install -r requirements_Windows.txt**  # for Windows
