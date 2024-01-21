@@ -6,7 +6,7 @@ from io import BytesIO
 url = 'http://localhost:8080/2015-03-31/functions/function/invocations'
 
 # Load the TIFF image from file or any other source
-image_path = "./../Data50_res256_filtered_20/validate/sat/sat_M-33-48-A-c-4-4_01_10.tif"
+image_path = "./../Data50_res256_filtered_20/validate/sat/sat_M-33-48-A-c-4-4_01_09.tif"
 with open(image_path, 'rb') as file:
     image_data = file.read()
 
