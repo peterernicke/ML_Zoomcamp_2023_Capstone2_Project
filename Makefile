@@ -6,7 +6,6 @@ environment:
 	python3 -m pip install --upgrade pip
 	pip3 install --upgrade pipenv
 	pipenv install --python 3.10
-	pipenv run pip install -r requirements.txt
 	$(shell mkdir -p Model)
 
 stop_docker:

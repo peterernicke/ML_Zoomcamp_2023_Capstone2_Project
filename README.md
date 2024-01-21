@@ -6,7 +6,7 @@ Image created Microsoft Bing Image Creator (https://www.bing.com/images/create)
 </p>
 
 ## Problem Description
-The dataset for this project is from [LandCover.ai](https://landcover.ai.linuxpolska.com/download/landcover.ai.v1.zip). LandCover.ai provides aerial images of Poland (total area of 216.27 km²) and a corresponding mask for each image. That mask labels every pixel of the aerial image with it's own class. The resulting segmentation has 4 landcover classes buildings, woodlands, water and roads. Any pixel that doesn't belong to this classes belong to the fifth class "unlabeled".
+The dataset for this project is from [LandCover.ai](https://landcover.ai.linuxpolska.com/download/landcover.ai.v1.zip). LandCover.ai provides aerial images of Poland (total area of 216.27 km²) and a corresponding mask for each image. That mask labels every pixel of the aerial image with it's own class. The resulting segmentation has 4 landcover classes: buildings, woodlands, water and roads. Any pixel that doesn't belong to this classes belongs to the fifth class "unlabeled".
 The task for this project is to provide an automatic mapping of buildings, woodlands, water and roads from aerial images.
 
 ## Data
@@ -81,8 +81,6 @@ For testing you may want to change a few other parameters:
 - #Path to the output folders
     - DATA_FOLDER = './../Data'
 
-I manually separated the orthophotos with 25cm pixel resolution ('./../laco.ai_25') from the orthophotos with 50cm pixel resolution './../laco.ai_50', because I made some test runs also on one resolution (for example in train.ipynb) to increase the performance.
-
 ## Script train.py
 This script starts the final training. The steps are described in the train.ipynb notebook. This script requires the prior run of "prepareInputData.py" as described above. Now you should have a "Data" folder with splitted dataset for train, validate, and test. 
 
@@ -108,7 +106,7 @@ Adapt two variables in "prepareInputData.py"...
 
 #### Recommendation: Step 3 - Resample images to 256x256 patches
 **Important note**
-On my Ubuntu 22.04 pc this setting let my machine rebooting, on Windows this works fine.
+On my Ubuntu 22.04 pc (32GB RAM) this setting let my machine rebooting, on Windows (32GB RAM) this works fine.
 To avoid overloading the machine, you can also choose the safer option and choose a **RESAMPLING_IMAGE_SIZE = 128**. In that case you need to adapt the folder paths (256->128).
 
 Ensure that the following default values are set in "prepareTraining.py"
@@ -200,7 +198,7 @@ Now you have a docker container running with the image public.ecr.aws/lambda/pyt
 ## Troubleshooting
 In case there are any problems to create the virtual environment try the following steps:
 
-1. Delete "Pipfile", "Pipfile.lock"
+1. Delete "Pipfile" and "Pipfile.lock"
 2. Use these commands to build the environment
 
 - **make environment**
