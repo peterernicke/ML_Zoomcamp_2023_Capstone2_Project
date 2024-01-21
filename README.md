@@ -1,4 +1,4 @@
-# ML Zoomcamp 2023 Capstone2 Project
+# ML Zoomcamp 2023 Capstone2 Project - Landcover Segmentation
 <p align="center">
 <img src="Images/cover-bingImageCreator.jpg" width="850" align="center">
 </br>
@@ -92,11 +92,11 @@ To run a sample training in a reasonable time and with a good result I recommend
 - **cd Utils**
 - **python separateSmallAndBigImages.py**
 
-Now you can access the data based on the resolution. The folder "laco.ai_big" contains the 8 orthophotos with 50cm resolution and "laco.ai_small" contains 33 orthophotos with 25cm resolution. For the quick run I recommend to go on with the "laco.ai_small" folder.
+Now you can access the data based on the resolution. The folder "laco.ai_big" contains the 8 orthophotos with 50cm resolution and "laco.ai_small" contains 33 orthophotos with 25cm resolution. For the quick run I recommend to go on with the "laco.ai_big" folder.
 
 #### Recommendation: Step 2
 Adapt two variables in "prepareInputData.py"...
-- main_folder = './../laco.ai_small'
+- main_folder = './../laco.ai_big'
 - DATA_FOLDER = './../Data50'
 
 ... and run again:
@@ -137,6 +137,47 @@ Then run:
 - **python train.py**
 
 ## Script predict.py
+After the training process, you can test your model with the predict.py script. You just need to adapt the *model_path* parameter. 
+
+model_path = "./path/to/your/model/...keras"
+
+Then you can start the Flask application which is a web service that serves your model and waits for your requests. Start the Flask app with these commands:
+
+- **cd Scripts**
+- **python predict.py**
+
+You can test your model by providing an image file. Please adapt the *image_path* parameter. The Flask application will return the predicted image mask for the requested aerial image. It is automatically saved to the Scripts folder with the name "predicted_image.png". Run these commands:
+
+- **cd Scripts**
+- **python predict-test.py**
+
+One sample image looks like:
+
+<p align="center">
+    <img src="Images/predicted_image.png" alt="predicted_image" style="width: 20%;">
+</p>
+
+## Flask Web Application
+There is a second Flask application, that provide a nicer visualization. You can find it in the FlaskWebApp folder. The configuration is very easy, because it's the same as you already did in the predict.py file. You only need to change the *model_path* parameter.
+
+model_path = "./path/to/your/model/...keras"
+
+Then you can start the Flask application with these commands:
+
+- **cd FlaskWebApp**
+- **python predictWithWebsite.py**
+
+Then open a web browser and open that link http://localhost:9898/ and you can use another way to check your model.
+
+<p align="center">
+    <img src="Images/flaskWebsite.png" alt="predicted_image" style="width: 50%;">
+</p>
+
+Choose an aerial image and upload it. Wait a moment and you'll see both files your uploaded image and the prediction for that image.
+
+<p align="center">
+    <img src="Images/flaskWebsiteResult.png" alt="predicted_image" style="width: 50%;">
+</p>
 
 ## Model serving with TensorFlow Serving
 

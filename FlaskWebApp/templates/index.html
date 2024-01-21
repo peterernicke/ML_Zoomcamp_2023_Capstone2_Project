@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landcover Segmentation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Landcover Segmentation Web Application</h1>
+        <img src="{{ url_for('static', filename='headImage.jpg') }}" width="500" alt="Head Image">
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <label for="file">Choose a TIFF file</label>
+            <input type="file" name="file" id="file" accept=".tif, .tiff" required>
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+</body>
+</html>

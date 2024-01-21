@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landcover Segmentation Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        img {
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+            max-width: 100%;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Landcover Segmentation Result</h1>
+        <h2>Original Image</h2>
+        <img src="{{ url_for('uploaded_file', filename=original_image) }}" alt="Original Image">
+        <h2>Predicted Image</h2>
+        <img src="{{ url_for('uploaded_file', filename=predicted_image) }}" alt="Predicted Image">
+    </div>
+</body>
+</html>
+
