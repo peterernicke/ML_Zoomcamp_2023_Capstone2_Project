@@ -184,7 +184,13 @@ Choose an aerial image and upload it. Wait a moment and you'll see both files yo
 </p>
 
 ## Serverless Deployment with AWS Lambda
-In this section I describe how I use AWS Lambda for the serverless deployment of my model. You can find all the preparation in the Jupyter notebook called "notebook_serverless.ipynb" in the Notebook folder. Ensure that you have a converted model file "final-model.tflite" in your Deployment folder. Here ("notebook_serverless.ipynb") you can find the steps to convert a model. If you want to see this in action you just need the following commands:
+In this section I describe how I use AWS Lambda for the serverless deployment of my model. The next image gives you an overview about how this works. There is AWS Lambda that takes care of the model, gets an aerial image as input, applies the model, and returns the predicted image mask.
+
+<p align="center">
+    <img src="Images/AWSLambda.png" alt="predicted_image" style="width: 50%;">
+</p>
+
+You can find all the preparation in the Jupyter notebook called "notebook_serverless.ipynb" in the Notebook folder. Ensure that you have a converted model file "final-model.tflite" in your Deployment folder. Here ("notebook_serverless.ipynb") you can find the steps to convert a model. If you want to see this in action you just need the following commands:
 
 - **cd Deployment**
 - **docker build -t segmentation-model .**
